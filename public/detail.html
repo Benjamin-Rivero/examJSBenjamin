@@ -4,9 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="/public/css/index.css">
+    <link rel="stylesheet" href="/public/css/detail.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
 </head>
 <body>
-    <div class="product"></div>
+
+    <header><button id="afficher-panier">Afficher le panier</button></header>
+    <div class="container">
+        <div class="product"></div>
+        <button class="ajoutPanier">Ajouter au panier</button>
+        <a href="/list">Retourner à la liste des produits</a>
+    </div>  
+    <script src="/public/js/index.js"></script>
     <script type="module" src="/public/js/models.js" ></script>
     <script type="module" src="/public/js/detail.js"></script>
 </body>

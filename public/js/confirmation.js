@@ -1,26 +1,4 @@
-function ajouterPanierAPage() {
-	const body = document.querySelector('body');
-
-	body.innerHTML =
-		`<!-- Modal pour afficher le contenu du panier -->
-        <div id="panier-modal" class="modal">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h2>Panier</h2>
-                    <span class="close-btn" id="fermer-modal">&times;</span>
-                </div>
-                <div class="modal-body" id="panier-content">
-                </div>
-                <div class="total-price" id="prix-total">Total : 0 €</div>
-                <div class="modal-footer">
-                    <button class="validate-btn">Valider le panier</button>
-                </div>
-            </div>
-        </div>` + body.innerHTML;
-}
-
-// Fonction pour afficher le contenu du panier
-function afficherPanier() {
+function afficherContenuPanier() {
 	const panier = JSON.parse(localStorage.getItem('panier')) || [];
 	const panierContent = document.getElementById('panier-content');
 	const prixTotalElem = document.getElementById('prix-total');
@@ -53,9 +31,6 @@ function afficherPanier() {
 		});
 	}
 	prixTotalElem.innerText = `Total : ${prixTotal.toFixed(2)} €`;
-
-	// Afficher la modal
-	document.getElementById('panier-modal').style.display = 'flex';
 }
 
 // Fonction pour modifier la quantité
@@ -72,9 +47,8 @@ function modifierQuantite(index, change) {
 
 	// Sauvegarder le panier dans le localStorage
 	localStorage.setItem('panier', JSON.stringify(panier));
-
 	// Réafficher le panier
-	afficherPanier();
+	afficherContenuPanier();
 }
 
 // Fonction pour supprimer un article
@@ -88,30 +62,31 @@ function supprimerArticle(index) {
 	localStorage.setItem('panier', JSON.stringify(panier));
 
 	// Réafficher le panier
-	afficherPanier();
+	afficherContenuPanier();
 }
 
-ajouterPanierAPage();
-// Bouton pour afficher le panier
-const boutonAfficherPanier = document.getElementById('afficher-panier');
-boutonAfficherPanier.addEventListener('click', afficherPanier);
+afficherContenuPanier();
 
-// Bouton pour fermer la modal
-const fermerModalBtn = document.getElementById('fermer-modal');
-fermerModalBtn.addEventListener('click', function () {
-	document.getElementById('panier-modal').style.display = 'none';
+const boutonValidationCommande = document.querySelector('.validate');
+boutonValidationCommande.addEventListener('click', function (e) {
+	if (localStorage.getItem('panier')) {
+		const commandForm = document.querySelector('.command-form form');
+		commandForm.style.display = 'flex';
+	} else {
+		alert('Votre panier est vide');
+	}
 });
 
-// Fermer la modal en cliquant à l'extérieur du contenu
-window.onclick = function (event) {
-	const modal = document.getElementById('panier-modal');
-	if (event.target === modal) {
-		modal.style.display = 'none';
-	}
-};
+window.addEventListener('submit', function (e) {
+	e.preventDefault();
+	const nom = document.querySelector('#nom').value;
+	const email = document.querySelector('#email').value;
+	const adresse = document.querySelector('#adresse').value;
+	if (!nom) this.alert('Veuillez rentrer votre nom');
+	else if (!email) this.alert('Veuillez rentrer votre email');
+	else if (!adresse) this.alert('Veuillez rentrer votre adresse');
+	else alert('Commande envoyée');
 
-const boutonValiderPanier = document.querySelector('.validate-btn');
-boutonValiderPanier.addEventListener('click', function () {
-	if (localStorage.getItem('panier')) window.location.href = '/confirmation';
-	else alert('Votre panier est vide');
+	window.location.href = '/list';
+	localStorage.clear();
 });

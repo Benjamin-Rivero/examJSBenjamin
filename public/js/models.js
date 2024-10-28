@@ -4,13 +4,15 @@ class Product {
 	prix;
 	description;
 	image;
+	caracteristics;
 
-	constructor(id, nom_produit, prix, description, image) {
+	constructor(id, nom_produit, prix, description, image, caracteristiques) {
 		this.id = id;
 		this.nom_produit = nom_produit;
 		this.prix = prix;
 		this.description = description;
 		this.image = image;
+		this.caracteristics = caracteristiques;
 	}
 }
 
@@ -21,7 +23,13 @@ class Caracteristics {
 	ecran;
 	impression;
 
-	constructor() {}
+	constructor(resolution, zoom, connectivite, ecran, impression) {
+		this.resolution = resolution;
+		this.zoom = zoom;
+		this.connectivite = connectivite;
+		this.ecran = ecran;
+		this.impression = impression;
+	}
 }
 
 const productMap = new Map();
@@ -35,7 +43,7 @@ async function importJson(path) {
 }
 
 async function importProducts() {
-	let count = 0;
+	let count = 1;
 	const jsonData = await importJson(jsonPath);
 	jsonData.map((product) => {
 		productMap.set(
@@ -45,7 +53,14 @@ async function importProducts() {
 				product.nom_produit,
 				product.prix,
 				product.descriptif,
-				product.image
+				product.image,
+				new Caracteristics(
+					product.caracteristiques.résolution,
+					product.caracteristiques.zoom,
+					product.caracteristiques.connectivité,
+					product.caracteristiques.écran,
+					product.caracteristiques.impression
+				)
 			)
 		);
 		count++;

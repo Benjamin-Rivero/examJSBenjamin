@@ -21,6 +21,10 @@ app.get('/detail/:id', (req, res) => {
 	res.sendFile(path.join(__dirname, 'public/detail.html'));
 });
 
+app.get('/confirmation', (req, res) => {
+	res.sendFile(path.join(__dirname, 'public/confirmation.html'));
+});
+
 app.listen(appPort, () => {
 	console.log(`Serveur lancé sur le port ${appPort}`);
 });

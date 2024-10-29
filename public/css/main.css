@@ -1,0 +1,24 @@
+@import url('/public/css/panier.css');
+@import url('/public/css/index.css');
+
+:is(*, truc) {
+	margin: 0;
+	padding: 0;
+}
+
+body,
+html {
+	min-height: 100vh;
+}
+
+footer {
+	margin: auto;
+}
+
+.command-form form {
+	display: none;
+}
+
+/* main {
+	flex: 1;
+} */

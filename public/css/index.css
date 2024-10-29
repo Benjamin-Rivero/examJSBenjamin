@@ -1,6 +1,5 @@
-/* Style de la modal */
-.modal {
-    display: none; /* Cachée par défaut */
+/* .modal {
+    display: none;
     position: fixed;
     z-index: 1000;
     left: 0;
@@ -96,11 +95,13 @@
     text-align: right;
 }
 
-.command-form form{
-    display:none;
-    flex-direction: column;
-}
+
 
 form input, form button {
     width:30rem;
+} */
+
+.command-form form {
+	display: none;
+	flex-direction: column;
 }

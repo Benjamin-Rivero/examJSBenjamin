@@ -4,7 +4,11 @@ const product = productMap.get(~~curPage);
 function addProductInfo() {
 	const divProduct = document.querySelector('.product');
 	divProduct.innerHTML =
-		`<h1>${product.nom_produit}</h1>` +
+		`<div class="row">` +
+		`<div class="d-flex gap-1">
+			<a href="/list" class="btn btn-secondary"><i class="fa-solid fa-right-to-bracket"></i></a>
+			<h1 class="h-fit">${product.nom_produit}</h1>
+		</div>` +
 		`<span>${product.prix}</span>` +
 		`<p>${product.description}</p>` +
 		`<h2>Caractéristiques : </h2> <br>` +
@@ -12,12 +16,13 @@ function addProductInfo() {
 		(product.caracteristics.zoom
 			? `<p><span class="label">Zoom :</span> ${product.caracteristics.zoom}</p>`
 			: '') +
-		`<p><span class="label">Écran :</span>${product.caracteristics.ecran}</p>` +
-		`<p><span class="label">Connectivité :</span>${product.caracteristics.connectivite}</p>` +
+		`<p><span class="label">Écran :</span> ${product.caracteristics.ecran}</p>` +
+		`<p><span class="label">Connectivité :</span> ${product.caracteristics.connectivite}</p>` +
 		(product.caracteristics.impression
-			? `<p><span class="label">Impression :</span>${product.caracteristics.impression}</p>`
+			? `<p><span class="label">Impression :</span> ${product.caracteristics.impression}</p>`
 			: '') +
-		`<img src="/public/${product.image}">`;
+		`<img class="product-img h-50" src="/public/${product.image}">` +
+		`</div>`;
 	document.querySelector('.ajoutPanier').addEventListener('click', function () {
 		ajouterAuPanier(product);
 	});
@@ -47,7 +52,6 @@ function ajouterAuPanier(product) {
 
 	// Optionnel : Afficher une confirmation
 	alert('Produit ajouté au panier !');
-	console.log(panier);
 }
 
 addProductInfo();

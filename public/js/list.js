@@ -10,8 +10,9 @@ function addProductsToPage() {
 			<div class="card-body">
 				<h5 class="card-title">${value.nom_produit}</h5>
 				<p class="card-text">${value.description}</p>
-				<p>${value.prix}</p>
+				
 			</div>
+			<div class="card-footer d-flex"><p>${value.prix}</p></div>
 	  	</div></a>`;
 		divProducts.appendChild(divProduct);
 	});

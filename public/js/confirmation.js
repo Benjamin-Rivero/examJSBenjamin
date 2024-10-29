@@ -16,16 +16,16 @@ function afficherContenuPanier() {
 			prixTotal += sousTotal;
 			panierContent.innerHTML += `
                 <div class="cart-item">
-                    <div>
-                    <p><strong>Nom :</strong> ${item.nom}</p>
-                    <p><strong>Prix :</strong> ${item.prix}</p>
-                    <div class="quantity-controls">
-                                <button class="quantity-btn" onclick="modifierQuantite(${index}, -1)">-</button>
-                                <span><strong>Quantité :</strong> ${item.quantite}</span>
-                                <button class="quantity-btn" onclick="modifierQuantite(${index}, 1)">+</button>
-                            </div>
+                    <div class="d-flex justify-content-between gap-2 w-50">
+						<p><strong>Nom :</strong> ${item.nom}</p>
+						<p><strong>Prix :</strong> ${item.prix}</p>
+						<div class="quantity-controls">
+									<button class="btn btn-primary" onclick="modifierQuantite(${index}, -1)">-</button>
+									<span><strong>Quantité :</strong> ${item.quantite}</span>
+									<button class="btn btn-primary" onclick="modifierQuantite(${index}, 1)">+</button>
+								</div>
                     </div>
-                    <button class="delete-btn" onclick="supprimerArticle(${index})">Supprimer</button>
+                    <button class="btn btn-danger" onclick="supprimerArticle(${index})">Supprimer</button>
                 </div>
             `;
 		});
@@ -71,7 +71,7 @@ const boutonValidationCommande = document.querySelector('.validate');
 boutonValidationCommande.addEventListener('click', function (e) {
 	if (localStorage.getItem('panier')) {
 		const commandForm = document.querySelector('.command-form form');
-		commandForm.style.display = 'flex';
+		commandForm.classList.toggle('d-flex');
 	} else {
 		alert('Votre panier est vide');
 	}

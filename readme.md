@@ -1,4 +1,4 @@
-# Game-In - Arena Of Gamers
+# Site de vente d'appareil photo
 
 ## Contexte du projet
 

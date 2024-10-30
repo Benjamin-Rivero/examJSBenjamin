@@ -1,16 +1,14 @@
-function afficherContenuPanier() {
-	const panier = JSON.parse(localStorage.getItem('panier')) || [];
+let panier = JSON.parse(localStorage.getItem('panier')) || [];
+function showCartContent() {
 	const panierContent = document.getElementById('panier-content');
 	const prixTotalElem = document.getElementById('prix-total');
 	let prixTotal = 0;
-	// Vider le contenu précédent de la modal
+
 	panierContent.innerHTML = '';
 
 	if (panier.length === 0) {
-		// Message si le panier est vide
 		panierContent.innerHTML = '<p>Votre panier est vide.</p>';
 	} else {
-		// Afficher chaque article du panier
 		panier.forEach((item, index) => {
 			const sousTotal = item.prix.replace('€', '') * 1 * item.quantite;
 			prixTotal += sousTotal;
@@ -20,12 +18,12 @@ function afficherContenuPanier() {
 						<p><strong>Nom :</strong> ${item.nom}</p>
 						<p><strong>Prix :</strong> ${item.prix}</p>
 						<div class="quantity-controls">
-									<button class="btn btn-primary" onclick="modifierQuantite(${index}, -1)">-</button>
+									<button class="btn btn-primary" onclick="changeQuantity(${index}, -1)">-</button>
 									<span><strong>Quantité :</strong> ${item.quantite}</span>
-									<button class="btn btn-primary" onclick="modifierQuantite(${index}, 1)">+</button>
+									<button class="btn btn-primary" onclick="changeQuantity(${index}, 1)">+</button>
 								</div>
                     </div>
-                    <button class="btn btn-danger" onclick="supprimerArticle(${index})">Supprimer</button>
+                    <button class="btn btn-danger" onclick="deleteItem(${index})">Supprimer</button>
                 </div>
             `;
 		});
@@ -33,43 +31,31 @@ function afficherContenuPanier() {
 	prixTotalElem.innerText = `Total : ${prixTotal.toFixed(2)} €`;
 }
 
-// Fonction pour modifier la quantité
-function modifierQuantite(index, change) {
-	let panier = JSON.parse(localStorage.getItem('panier')) || [];
-
-	// Mettre à jour la quantité
+function changeQuantity(index, change) {
 	panier[index].quantite += change;
 
-	// Si la quantité devient 0 ou moins, supprimer l'élément
 	if (panier[index].quantite <= 0) {
 		panier.splice(index, 1);
 	}
 
-	// Sauvegarder le panier dans le localStorage
 	localStorage.setItem('panier', JSON.stringify(panier));
-	// Réafficher le panier
-	afficherContenuPanier();
+
+	showCartContent();
 }
 
-// Fonction pour supprimer un article
-function supprimerArticle(index) {
-	let panier = JSON.parse(localStorage.getItem('panier')) || [];
-
-	// Supprimer l'article à l'index donné
+function deleteItem(index) {
 	panier.splice(index, 1);
 
-	// Sauvegarder le panier dans le localStorage
 	localStorage.setItem('panier', JSON.stringify(panier));
 
-	// Réafficher le panier
-	afficherContenuPanier();
+	showCartContent();
 }
 
-afficherContenuPanier();
+showCartContent();
 
 const boutonValidationCommande = document.querySelector('.validate');
 boutonValidationCommande.addEventListener('click', function (e) {
-	if (localStorage.getItem('panier')) {
+	if (panier.length != '0') {
 		const commandForm = document.querySelector('.command-form form');
 		commandForm.classList.toggle('d-flex');
 	} else {
@@ -85,8 +71,9 @@ window.addEventListener('submit', function (e) {
 	if (!nom) this.alert('Veuillez rentrer votre nom');
 	else if (!email) this.alert('Veuillez rentrer votre email');
 	else if (!adresse) this.alert('Veuillez rentrer votre adresse');
-	else alert('Commande envoyée');
-
-	window.location.href = '/';
-	localStorage.clear();
+	else {
+		alert('Commande envoyée');
+		window.location.href = '/';
+		localStorage.removeItem('panier');
+	}
 });

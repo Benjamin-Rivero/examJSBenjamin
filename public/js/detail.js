@@ -24,22 +24,18 @@ function addProductInfo() {
 		`<img class="product-img h-50" src="/public/${product.image}">` +
 		`</div>`;
 	document.querySelector('.ajoutPanier').addEventListener('click', function () {
-		ajouterAuPanier(product);
+		addToCart(product);
 	});
 }
 document.querySelector('title').textContent = product.nom_produit;
-function ajouterAuPanier(product) {
-	// Récupérer le panier existant depuis le localStorage
+function addToCart(product) {
 	let panier = JSON.parse(localStorage.getItem('panier')) || [];
 
-	// Vérifier si le produit existe déjà dans le panier
 	const produit = panier.find((item) => item.nom === product.nom_produit);
 
 	if (produit) {
-		// Si le produit existe déjà, augmenter la quantité
 		produit.quantite += 1;
 	} else {
-		// Si le produit n'existe pas, l'ajouter avec une quantité de 1
 		panier.push({
 			nom: product.nom_produit,
 			prix: product.prix,
@@ -47,10 +43,8 @@ function ajouterAuPanier(product) {
 		});
 	}
 
-	// Stocker le panier mis à jour dans le localStorage
 	localStorage.setItem('panier', JSON.stringify(panier));
 
-	// Optionnel : Afficher une confirmation
 	alert('Produit ajouté au panier !');
 }
 

@@ -29,9 +29,9 @@ body.classList = ['d-flex flex-column'];
 document.querySelector('html').classList = ['d-flex flex-column'];
 body.appendChild(footer);
 
-function ajouterPanierAPage() {
+function addCartToPage() {
 	body.innerHTML =
-		`<div id="panier-modal" class="modal">
+		`<div id="panier-modal" class="modal modal-lg">
 			<div class="modal-dialog">
 				<div class="modal-content">
 					<div class="modal-header">
@@ -48,15 +48,14 @@ function ajouterPanierAPage() {
 			</div>
         </div>` + body.innerHTML;
 }
-
-function afficherPanier() {
-	const panier = JSON.parse(localStorage.getItem('panier')) || [];
+let panier;
+function showCart() {
+	panier = JSON.parse(localStorage.getItem('panier')) || [];
 	const panierContent = document.getElementById('panier-content');
 	const prixTotalElem = document.getElementById('prix-total');
 	let prixTotal = 0;
 
 	panierContent.innerHTML = '';
-
 	if (panier.length === 0) {
 		panierContent.innerHTML = '<p>Votre panier est vide.</p>';
 	} else {
@@ -69,12 +68,12 @@ function afficherPanier() {
 						<p><strong>Nom :</strong> ${item.nom}</p>
 						<p><strong>Prix :</strong> ${item.prix}</p>
 						<div class="quantity-controls">
-									<button class="btn btn-primary" onclick="modifierQuantite(${index}, -1)">-</button>
+									<button class="btn btn-primary" onclick="changeQuantity(${index}, -1)">-</button>
 									<span><strong>Quantité :</strong> ${item.quantite}</span>
-									<button class="btn btn-primary" onclick="modifierQuantite(${index}, 1)">+</button>
+									<button class="btn btn-primary" onclick="changeQuantity(${index}, 1)">+</button>
 								</div>
                     </div>
-                    <button class="btn btn-danger" onclick="supprimerArticle(${index})">Supprimer</button>
+                    <button class="btn btn-danger" onclick="deleteItem(${index})">Supprimer</button>
                 </div>
             `;
 		});
@@ -84,9 +83,7 @@ function afficherPanier() {
 	document.getElementById('panier-modal').style.display = 'block';
 }
 
-function modifierQuantite(index, change) {
-	let panier = JSON.parse(localStorage.getItem('panier')) || [];
-
+function changeQuantity(index, change) {
 	panier[index].quantite += change;
 
 	if (panier[index].quantite <= 0) {
@@ -95,23 +92,21 @@ function modifierQuantite(index, change) {
 
 	localStorage.setItem('panier', JSON.stringify(panier));
 
-	afficherPanier();
+	showCart();
 }
 
-function supprimerArticle(index) {
-	let panier = JSON.parse(localStorage.getItem('panier')) || [];
-
+function deleteItem(index) {
 	panier.splice(index, 1);
 
 	localStorage.setItem('panier', JSON.stringify(panier));
 
-	afficherPanier();
+	showCart();
 }
 
-ajouterPanierAPage();
+addCartToPage();
 
 const boutonAfficherPanier = document.getElementById('afficher-panier');
-boutonAfficherPanier.addEventListener('click', afficherPanier);
+boutonAfficherPanier.addEventListener('click', showCart);
 
 const fermerModalBtn = document.getElementById('fermer-modal');
 fermerModalBtn.addEventListener('click', function () {
@@ -127,6 +122,6 @@ window.onclick = function (event) {
 
 const boutonValiderPanier = document.querySelector('.validate-btn');
 boutonValiderPanier.addEventListener('click', function () {
-	if (localStorage.getItem('panier')) window.location.href = '/confirmation';
+	if (panier.length != '0') window.location.href = '/confirmation';
 	else alert('Votre panier est vide');
 });

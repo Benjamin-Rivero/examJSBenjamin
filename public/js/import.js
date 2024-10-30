@@ -21,11 +21,14 @@ header.innerHTML =
     </div>
   </div>
 </nav>` + header.innerHTML;
+
 const footer = document.createElement('footer');
 // footer.classList = 'm-auto';
 footer.innerHTML = `<p>Non, aucun droit réservé, volez moi mon site</p>`;
 footer.classList = 'my-5';
 const body = document.querySelector('body');
+
 body.classList = ['d-flex flex-column justify-content-between'];
+
 document.querySelector('html').classList = ['d-flex flex-column'];
 body.appendChild(footer);

@@ -6,7 +6,7 @@ function addProductInfo() {
 	divProduct.innerHTML =
 		`<div class="row">` +
 		`<div class="d-flex gap-1">
-			<a href="/list" class="btn btn-secondary"><i class="fa-solid fa-right-to-bracket"></i></a>
+			<a href="/" class="btn btn-secondary"><i class="fa-solid fa-right-to-bracket"></i></a>
 			<h1 class="h-fit">${product.nom_produit}</h1>
 		</div>` +
 		`<span>${product.prix}</span>` +

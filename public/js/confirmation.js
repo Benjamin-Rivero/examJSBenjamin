@@ -87,6 +87,6 @@ window.addEventListener('submit', function (e) {
 	else if (!adresse) this.alert('Veuillez rentrer votre adresse');
 	else alert('Commande envoyée');
 
-	window.location.href = '/list';
+	window.location.href = '/';
 	localStorage.clear();
 });
